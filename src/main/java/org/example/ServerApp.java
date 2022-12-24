@@ -11,11 +11,7 @@ public class ServerApp {
 
         CollectionTinderDao collectionTinderDao = new CollectionTinderDao();
 
-        //  Server server = new Server(8080);
-        //  ServletContextHandler handler = new ServletContextHandler();
-
         HashMap<Integer, User> users = collectionTinderDao.getUsers();
-
 
         System.out.println("----------");
 
@@ -29,9 +25,8 @@ public class ServerApp {
                         -> System.out.println(value.toString())));
 
         System.out.println("----------");
-        List<Message>messageList = collectionTinderDao.getMessageList(2,1);
+        List<Message>messageList = collectionTinderDao.getMessageList(1,2);
         System.out.println(messageList);
         System.out.println("----------");
-
     }
 }

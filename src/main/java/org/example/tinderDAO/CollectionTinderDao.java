@@ -15,11 +15,12 @@ public class CollectionTinderDao {
     }
 
     public Connection getConnection() {
+
         try {
             return DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/tinder",
-                    "tinder",
-                    "Gbtntn751");
+                    "jdbc:postgresql://suleiman.db.elephantsql.com:5432/kkjammbr",
+                    "kkjammbr",
+                    "jELEJTiSbMjZS9_f-2grM7v4BPuqBLGe");
         } catch (SQLException e) {
             System.out.println("no connection");
             throw new RuntimeException(e);
@@ -83,5 +84,3 @@ public class CollectionTinderDao {
         return messageList;
     }
 }
-//connection.prepareStatement("INSERT INTO public.login (id, user_id, user_login, user_password, dt) VALUES (DEFAULT, 5, '555', '555', DEFAULT)");
-
