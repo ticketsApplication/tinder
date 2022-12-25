@@ -1,9 +1,11 @@
 package org.example;
 
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.example.svt.*;
+
 import org.example.tinderDAO.CollectionTinderDao;
 
 import java.sql.SQLException;
@@ -12,11 +14,13 @@ import java.util.List;
 
 public class ServerApp {
 
+
     //  http://localhost:8080/users
     //  http://localhost:8080/liked
     //  http://localhost:8080/login
     //  http://localhost:8080/chat
     public static void main(String[] args) throws Exception {
+
 
         CollectionTinderDao collectionTinderDao = new CollectionTinderDao();
 
@@ -38,6 +42,7 @@ public class ServerApp {
         System.out.println(messageList);
         System.out.println("----------");
 
+
         Server server = new Server(8080);
         ServletContextHandler handler = new ServletContextHandler();
 
@@ -52,5 +57,6 @@ public class ServerApp {
 
         server.start();
         server.join();
+
     }
 }
