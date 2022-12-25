@@ -19,4 +19,23 @@ public class UsersServlet extends HttpServlet {
             fileGet.forEach(x -> w.println(x));
         }
     }
+
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+
+        List<String> fileGet = Files.readAllLines(Paths.get("static-content/html/like-page3.html"));
+
+        try (PrintWriter w = resp.getWriter()) {
+            fileGet.forEach(x -> w.println(x));
+        }
+
+
+
+    }
+
+
+
+
+
 }
