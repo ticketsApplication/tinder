@@ -28,9 +28,9 @@
     }
 
     /* Add a background color on hover */
-    .btn-group button:hover {
-        background-color: #3e8e41;
-    }
+    /*.btn-group button:hover {*/
+    /*    background-color: #3e8e41;*/
+    /*}*/
 
 </style>
 <head>
@@ -62,15 +62,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
         <div class="card-body">
             <div class="row">
                     <div class="col-12 col-lg-12 col-md-12 text-center">
-                        <img src="https://klike.net/uploads/posts/2022-06/1655707510_2.jpg" alt=""
+                        <img width="400px" height="400px" src="${user.photoLink}" alt=""
                              class="mx-auto rounded-circle img-fluid">
-                        <h2 class="mb-0 text-truncated">Ann</h2>
+                        <h2 class="mb-0 text-truncated">${user.name}</h2>
                         <br>
                         <div class="btn-group">
                             <form action="" method="POST">
-                            <button class="btn btn-outline-danger btn-block" formaction="/users" formmethod="post"><span class="fa fa-heart"></span>Yes</button>
-                            <button class="btn btn-outline-danger btn-block" formaction="/users" formmethod="post"><span class="fa fa-times"></span>No</button>
-                            <button class="btn btn-outline-danger btn-block" formaction="/liked" formmethod="post">Liked</button>
+                            <button type="submit" name="like_status" value="${user.id}.like" formmethod="post" formaction="/users">
+                                <span class="fa fa-heart"></span>
+                            </button>
+                            <button type="submit" name="like_status" value="${user.id}.dislike"  formmethod="post" formaction="/users">
+                                <span class="fa fa-times"></span></button>
+                            <button formaction="/liked" formmethod="post">Liked</button>
                             </form>
                         </div>
 

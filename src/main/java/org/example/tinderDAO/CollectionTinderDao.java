@@ -27,38 +27,38 @@ public class CollectionTinderDao {
         }
     }
 
-    public HashMap<Integer, User> getUsers() throws SQLException {
+    public List<User> getUsers() throws SQLException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("select * from users");
-        HashMap<Integer, User> iuHashMap = new HashMap<>();
+
+        List <User> userList = new ArrayList<>();
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
             String name = rs.getString("name");
             String link = rs.getString("photo");
-            iuHashMap.put(id, new User(id, name, link));
+            userList.add(new User(id, name, link));
         }
         connection.close();
-        return iuHashMap;
+        return userList;
     }
 
-    public HashMap<Integer, User> getLiked(int user_id) throws SQLException {
+    public List <User> getLiked(int user_id) throws SQLException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement(
                 "select * from users\n" +
                         "join liked l on users.id = l.who_liked\n" +
                         "where user_id =" + user_id);
-
-        HashMap<Integer, User> iuHashMap = new HashMap<>();
+        List <User> userList = new ArrayList<>();
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
             String name = rs.getString("name");
             String link = rs.getString("photo");
-            iuHashMap.put(id, new User(id, name, link));
+            userList.add (new User(id, name, link));
         }
         connection.close();
-        return iuHashMap;
+        return userList;
     }
 
     public List<Message> getMessageList(int userFrom, int userTo) throws SQLException {
