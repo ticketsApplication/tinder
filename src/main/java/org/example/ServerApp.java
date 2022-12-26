@@ -8,7 +8,6 @@ import org.example.svt.*;
 
 import org.example.tinderDAO.CollectionTinderDao;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +18,7 @@ public class ServerApp {
     //  http://localhost:8080/liked
     //  http://localhost:8080/login
     //  http://localhost:8080/chat
+    //  http://localhost:8080/dynamicusers
     public static void main(String[] args) throws Exception {
 
 
@@ -50,6 +50,7 @@ public class ServerApp {
         handler.addServlet(PeopleListServlet.class, "/liked");
         handler.addServlet(LoginServlet.class, "/login");
         handler.addServlet(ChatServlet.class, "/chat");
+        handler.addServlet(DynamicUsersServlet.class, "/dynamicusers");
 
         handler.addServlet(new ServletHolder(new StaticContentServlet("static-content")), "/static/*");
 
