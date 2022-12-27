@@ -21,7 +21,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "\nMessage{" +
                 "messageId=" + messageId +
                 ", userFrom=" + userFrom +
                 ", userTo=" + userTo +
