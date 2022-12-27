@@ -37,7 +37,6 @@ public class PeopleListServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(userList);
 
         data.put("user",userList);
 
@@ -58,7 +57,7 @@ public class PeopleListServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(userList);
+
         data.put("user",userList);
 
         try (PrintWriter w = resp.getWriter()) {

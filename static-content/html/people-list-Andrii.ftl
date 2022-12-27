@@ -33,14 +33,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
                     <div class="table-container">
                         <table class="table-users table" border="0">
                             <tbody>
-                            <form action="" method="POST">
                             <#list user as line>
                             <tr>
-                                <td width="0">
+                                <td width="10">
                                     <div class="avatar-img">
-                                        <button name="id" value="${line.id}" formmethod="post" formaction="/message">
-                                            <img class="img-circle" width="200px" height="200px"  alt="Button ${line.name}" src="${line.photoLink}"/>
-                                        </button>
+                                        <img class="img-circle" width="200px" height="200px" src="${line.photoLink}" />
                                     </div>
                                 </td>
                                 <td class="align-middle">
@@ -48,7 +45,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
                                 </td>
                             </tr>
                             </#list>
-                            </form>
                             </tbody>
                         </table>
                     </div>
