@@ -61,15 +61,20 @@ public class CollectionTinderDao {
         return userList;
     }
 
-    public List<Message> getMessageList(int userFrom, int userTo) throws SQLException {
+    public List<Message> getMessageList(int userOne, int userTwo) throws SQLException {
         Connection connection = getConnection();
-        PreparedStatement stmt = connection.prepareStatement(
-                "select *, 'L' dir from messages where user_from = " + userFrom +
-                        " and user_to = " + userTo +
-                        " union select *, 'R' dir from messages where user_from = " + userTo +
-                        " and user_to = " + userFrom +
-                        " order by dt");
         List<Message> messageList = new ArrayList<>();
+        PreparedStatement stmt = connection.prepareStatement(
+                "select *, 'L' dir from messages " +
+                        "where user_from = ? and user_to = ? " +
+                        "union select *, 'R' dir from messages " +
+                        "where user_from = ? and user_to = ? " +
+                        "order by dt");
+        stmt.setInt(1, userOne);
+        stmt.setInt(2, userTwo);
+        stmt.setInt(3, userTwo);
+        stmt.setInt(4, userOne);
+
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
@@ -82,5 +87,17 @@ public class CollectionTinderDao {
         }
         connection.close();
         return messageList;
+    }
+
+    public void setMessage(int userFrom, int userTo, String message) throws SQLException {
+        Connection connection = getConnection();
+        String sql = "INSERT INTO public.messages (id, user_from, user_to, message, dt) " +
+                "VALUES (DEFAULT, ?, ?, ?, DEFAULT)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, userFrom);
+        stmt.setInt(2, userTo);
+        stmt.setString(3, message);
+        stmt.execute();
+        connection.close();
     }
 }
