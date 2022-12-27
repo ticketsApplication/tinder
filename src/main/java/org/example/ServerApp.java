@@ -1,6 +1,7 @@
 package org.example;
 
 
+import freemarker.template.Configuration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -8,8 +9,10 @@ import org.example.svt.*;
 
 import org.example.tinderDAO.CollectionTinderDao;
 
-import java.util.HashMap;
-import java.util.List;
+
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+
 
 public class ServerApp {
 
@@ -24,33 +27,19 @@ public class ServerApp {
 
         CollectionTinderDao collectionTinderDao = new CollectionTinderDao();
 
-        HashMap<Integer, User> users = collectionTinderDao.getUsers();
-
-        System.out.println("----------");
-
-        users.forEach((key, value) -> System.out.println(value.getName()));
-
-        System.out.println("----------");
-        System.out.println((users.get(1)).getName());
-        System.out.println("----------");
-        collectionTinderDao.getLiked(1)
-                .forEach(((key, value)
-                        -> System.out.println(value.toString())));
-
-        System.out.println("----------");
-        List<Message>messageList = collectionTinderDao.getMessageList(1,2);
-        System.out.println(messageList);
-        System.out.println("----------");
-
+        Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
+        conf.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
+        conf.setDirectoryForTemplateLoading(new File("static-content/html"));
 
         Server server = new Server(8080);
         ServletContextHandler handler = new ServletContextHandler();
 
-        handler.addServlet(UsersServlet.class, "/users");
-        handler.addServlet(PeopleListServlet.class, "/liked");
+        handler.addServlet(new ServletHolder(new UsersServlet(collectionTinderDao, conf)), "/users");
+        handler.addServlet(new ServletHolder(new PeopleListServlet(collectionTinderDao, conf)), "/liked");
         handler.addServlet(LoginServlet.class, "/login");
-        handler.addServlet(ChatServlet.class, "/chat");
-        handler.addServlet(DynamicUsersServlet.class, "/dynamicusers");
+
+        handler.addServlet(ChatServlet.class, "/messages/{id}");
+
 
         handler.addServlet(new ServletHolder(new StaticContentServlet("static-content")), "/static/*");
 
