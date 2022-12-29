@@ -26,7 +26,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "\nUser{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", photoLink='" + photoLink + '\'' +
