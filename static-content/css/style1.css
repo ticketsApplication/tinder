@@ -1,4 +1,3 @@
-
 body {
     background: #e8d7d3; /* Old browsers */
     background: -moz-linear-gradient(top,  #e8d7d3 2%, #c9e0d3 10%, #e8deda 72%, #e8d7d3 100%); /* FF3.6-15 */
@@ -103,4 +102,9 @@ body {
 /* Add a background color on hover */
 .btn-group button:hover {
     background-color: #3e8e41;
+}
+
+.line-chat{
+    font-size: 5px;
+    line-height: 10px;
 }
