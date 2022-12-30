@@ -1,29 +1,31 @@
 package org.example;
 
 public class ChatMessage {
+    private String name;
+    private String message;
 
-    private final String name;
-    private final String text;
-
-//    private final int userId;
-
-    public ChatMessage(String name, String text) {
+    public ChatMessage(String name, String message) {
         this.name = name;
-        this.text = text;
-//        this.userId = userId;
+        this.message = message;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getText() {
-        return text;
+    public String getMessage() {
+        return message;
     }
 
-//    public int getUserId() {
-//        return userId;
-//    }
+    @Override
+    public String toString() {
+        return "\nChatMessage{" +
+                "name='" + name + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 
-
+    public void setName(String name) {
+        this.name = name;
+    }
 }
