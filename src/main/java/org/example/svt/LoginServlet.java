@@ -31,13 +31,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String next = req.getContextPath() + req.getRequestURI();
-        System.out.println(next);
         Cookie[] cs = req.getCookies();
         Optional.ofNullable(cs)
                 .flatMap(cc -> Arrays.stream(cc).filter(c -> c.getName().equals("id")).findFirst())
                 .ifPresentOrElse(
                         c -> {
                             String userId = c.getValue();
+                            System.out.println(userId);
                             List<String> fileGet = null;
                             try {
                                 fileGet = Files.readAllLines(Paths.get("static-content/html/login.html"));
@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
                             System.out.println("CalcServlet.no cookie");
 
                             try {
-                                resp.sendRedirect("/setcookie");  // + "?next =" + next
+                                resp.sendRedirect("/setcookie");
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -63,19 +63,36 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final long serialVersionUID = 1L;
 
-        String name = req.getParameter("name");
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String file = req.getParameter("file");
-        String userId = req.getParameter("id");
-        PrintWriter printWriter = resp.getWriter();
-
-        try {
-            collectionTinderDao.signUpUser(name, login, password, file, userId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        printWriter.close();
-
+        Cookie[] cs = req.getCookies();
+        Optional.ofNullable(cs).flatMap(cc -> Arrays.stream(cc).filter(c -> c.getName().equals("id")).findFirst())
+                .ifPresentOrElse(
+                        c -> {
+                            String userId = c.getValue();
+                            String name = req.getParameter("name");
+                            String login = req.getParameter("login");
+                            String password = req.getParameter("password");
+                            String file = req.getParameter("file");
+                            PrintWriter printWriter = null;
+                            try {
+                                printWriter = resp.getWriter();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            try {
+                                collectionTinderDao.signUpUser(name, login, password, file, userId);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                            printWriter.close();
+                        },
+                        () -> {
+                            System.out.println("CalcServlet.no cookie");
+                            try {
+                                resp.sendRedirect("/setcookie");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                );
     }
 }
