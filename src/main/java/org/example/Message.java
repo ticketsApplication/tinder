@@ -8,15 +8,17 @@ public class Message {
     private int userTo;
     private String message;
     private LocalDateTime dateTime;
-    private String direction;
+    //private String direction;
+    private String ico;
 
-    public Message(int messageId, int userFrom, int userTo, String message, LocalDateTime dateTime, String direction) {
+    public Message(int messageId, int userFrom, int userTo, String message, LocalDateTime dateTime, String ico) {
         this.messageId = messageId;
         this.userFrom = userFrom;
         this.userTo = userTo;
         this.message = message;
         this.dateTime = dateTime;
-        this.direction = direction;
+        //this.direction = direction;
+        this.ico = ico;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class Message {
                 ", userTo=" + userTo +
                 ", message='" + message + '\'' +
                 ", dateTime=" + dateTime +
-                ", direction='" + direction + '\'' +
+                ", ico='" + ico + '\'' +
                 '}';
     }
 }
