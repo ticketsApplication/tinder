@@ -1,19 +1,26 @@
 package org.example.tinderDAO;
 
+import org.example.ChatMessage;
 import org.example.Message;
 import org.example.User;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CollectionTinderDao {
 
     public CollectionTinderDao() {
+    }
+    private int currentUserId = 2;
+
+    public int getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(int currentUserId) {
+        this.currentUserId = currentUserId;
     }
 
     public Connection getConnection() {
@@ -62,33 +69,62 @@ public class CollectionTinderDao {
         return userList;
     }
 
-    public List<Message> getMessageList(int userOne, int userTwo) throws SQLException {
+    public List<ChatMessage> getChatList(int userOne, int userTwo) throws SQLException {
+        List<ChatMessage> chatList = new ArrayList<>();
         Connection connection = getConnection();
         List<Message> messageList = new ArrayList<>();
-        PreparedStatement stmt = connection.prepareStatement(
-                "select *, 'L' dir from messages " +
-                        "where user_from = ? and user_to = ? " +
-                        "union select *, 'R' dir from messages " +
-                        "where user_from = ? and user_to = ? " +
-                        "order by dt");
+        String sql = "select * from messages join users u on messages.user_from = u.id " +
+                "where (user_from = ? and user_to = ?) " +
+                "or (user_from = ? and user_to = ?) " +
+                "order by messages.dt";
+        PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setInt(1, userOne);
         stmt.setInt(2, userTwo);
         stmt.setInt(3, userTwo);
         stmt.setInt(4, userOne);
-
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            int id = rs.getInt("id");
-            int from = rs.getInt("user_from");
-            int to = rs.getInt("user_to");
+            String name = rs.getString("name");
             String message = rs.getString("message");
-            LocalDateTime dt = rs.getTimestamp("dt").toLocalDateTime();
-            String direction = rs.getString("dir");
-            messageList.add(new Message(id, from, to, message, dt, direction));
+            chatList.add(new ChatMessage(name, message));
         }
         connection.close();
-        return messageList;
+        String temp = "";
+        for (int i = 0; i < chatList.size(); i++) {
+            if (chatList.get(i).getName().equals(temp))
+                chatList.get(i).setName("");
+            else temp = chatList.get(i).getName();
+        }
+        return chatList;
     }
+
+//    public List<Message> getMessageList(int userOne, int userTwo) throws SQLException {
+//        Connection connection = getConnection();
+//        List<Message> messageList = new ArrayList<>();
+//        String sql = "select * from messages join users u on messages.user_from = u.id " +
+//                "where (user_from = ? and user_to = ?) " +
+//                "or (user_from = ? and user_to = ?) " +
+//                "order by messages.dt";
+//        PreparedStatement stmt = connection.prepareStatement(sql);
+//        stmt.setInt(1, userOne);
+//        stmt.setInt(2, userTwo);
+//        stmt.setInt(3, userTwo);
+//        stmt.setInt(4, userOne);
+//
+//        ResultSet rs = stmt.executeQuery();
+//        while (rs.next()) {
+//            int id = rs.getInt("id");
+//            int from = rs.getInt("user_from");
+//            int to = rs.getInt("user_to");
+//            String message = rs.getString("message");
+//            LocalDateTime dt = rs.getTimestamp("dt").toLocalDateTime();
+//            //String direction = rs.getString("dir");
+//            String ico = rs.getString("photo");
+//            messageList.add(new Message(id, from, to, message, dt, ico));
+//        }
+//        connection.close();
+//        return messageList;
+//    }
 
     public void setMessage(int userFrom, int userTo, String message) throws SQLException {
         Connection connection = getConnection();

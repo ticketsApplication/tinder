@@ -55,9 +55,17 @@ public class UsersServlet extends HttpServlet {
         String[] tokens = isLikedOrNot.split("[.]");
         int userId = Integer.parseInt(tokens[0]); // User id who should be liked
         if (tokens[1].equals("like")) {
-            // doLike (userId)
+            try {
+                collectionTinderDao.doLike(collectionTinderDao.getCurrentUserId(), userId);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } else if (tokens[1].equals("dislike")) {
-            //doDislike (userId)
+            try {
+                collectionTinderDao.doDisLike(collectionTinderDao.getCurrentUserId(),userId);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         System.out.printf("id: %s status: %s", tokens[0], tokens [1]);
