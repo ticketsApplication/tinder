@@ -33,7 +33,7 @@ public class PeopleListServlet extends HttpServlet {
         HashMap<String,Object> data = new HashMap<>();
         List<User> userList = null;
         try {
-            userList = collectionTinderDao.getLiked(1);
+            userList = collectionTinderDao.getLiked(collectionTinderDao.getCurrentUserId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +53,7 @@ public class PeopleListServlet extends HttpServlet {
         HashMap<String, Object> data = new HashMap<>();
         List<User> userList = null;
         try {
-            userList = collectionTinderDao.getLiked(1);
+            userList = collectionTinderDao.getLiked(collectionTinderDao.getCurrentUserId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
