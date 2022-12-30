@@ -100,4 +100,37 @@ public class CollectionTinderDao {
         stmt.execute();
         connection.close();
     }
+
+    ///////////
+    public void signUpUser(String name, String login, String password, String file, String userId) throws Exception {
+        Connection connection = getConnection();
+        String sql = "insert into users (name, photo, user_login, user_password, dt, usr) values (?, ?, ?, ?, default, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, name);
+        stmt.setString(2, file);
+        stmt.setString(3, login);
+        stmt.setString(4, password);
+        stmt.setString(5, userId);
+
+        stmt.execute();
+    }
+
+    public ArrayList<String> getAll() throws Exception {
+        Connection connection = getConnection();
+        String sql = "select name, photo, user_login, user_password, dt, usr from users";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<String> outcome = new ArrayList<>();
+        while (rs.next()) {
+            String name = rs.getString("name");
+            String login = rs.getString("login");
+            String password = rs.getString("password");
+            String file = rs.getString("file");
+            String userId = rs.getString("id");
+            outcome.add(String.format("name: %s, photo: s, username: %s, password: %s", name, file, login, password));
+        }
+        return outcome;
+    }
+    ///////////
+
 }
