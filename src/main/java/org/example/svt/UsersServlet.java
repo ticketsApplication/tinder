@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+
 import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -39,9 +41,11 @@ public class UsersServlet extends HttpServlet {
     private final HashMap <String,Object> data;
     private final List<User> userList;
 
+
     private String userIdMain;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 
 
         data.put("user",userList.get(0));
@@ -56,6 +60,7 @@ public class UsersServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
+
 
         Cookie[] cs = req.getCookies();
         String cookieName = "id";
@@ -94,6 +99,7 @@ public class UsersServlet extends HttpServlet {
             calc = 0;
             data.put("user",userList.get(calc));
         }
+
 
         try (PrintWriter w = resp.getWriter()) {
             conf.getTemplate("like-page-Andrii.ftl").process(data, w);

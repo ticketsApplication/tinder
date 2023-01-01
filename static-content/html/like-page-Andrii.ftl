@@ -47,7 +47,9 @@
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
+
     <link rel="stylesheet" href="static/css/style1.css">
+
 </head>
 <body style="/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e8d7d3+2,c9e0d3+10,e8deda+72,e8d7d3+100 */
 background: #e8d7d3; /* Old browsers */

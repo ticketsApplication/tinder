@@ -18,9 +18,11 @@ public class ServiceTinderDao {
         return collectionTinderDao.getLiked(user_id);
     }
 
+
     public List<Message> getMessageList(int userOne, int userTwo) throws SQLException {
         return collectionTinderDao.getMessageList(userOne,userTwo);
     }
+
     public void setMessage(int userFrom, int userTo, String message) throws SQLException {
         collectionTinderDao.setMessage(userFrom,userTo,message);
     }
