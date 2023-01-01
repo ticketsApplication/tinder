@@ -33,10 +33,8 @@ public class ServerApp {
         Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
         conf.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
         conf.setDirectoryForTemplateLoading(new File("static-content/html"));
-
-
-        handler.addServlet(ChatServlet.class, "/messages/{id}");
-
+        Server server = new Server(8080);
+        ServletContextHandler handler = new ServletContextHandler();
 
         handler.addServlet(new ServletHolder(new UsersServlet(collectionTinderDao, conf)), "/users");
         handler.addServlet(new ServletHolder(new PeopleListServlet(collectionTinderDao, conf)), "/liked");
