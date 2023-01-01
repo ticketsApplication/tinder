@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class LoginHistoryServlet extends HttpServlet {
+public class SignupHistoryServlet extends HttpServlet {
 
     private final CollectionTinderDao collectionTinderDao;
     private final Configuration configuration;
 
-    public LoginHistoryServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
+    public SignupHistoryServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
         this.collectionTinderDao = collectionTinderDao;
         this.configuration = conf;
     }

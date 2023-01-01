@@ -13,6 +13,7 @@ public class CollectionTinderDao {
 
     public CollectionTinderDao() {
     }
+
     private int currentUserId = 2;
 
     public int getCurrentUserId() {

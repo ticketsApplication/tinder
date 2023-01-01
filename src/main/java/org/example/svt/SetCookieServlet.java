@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class SetCookieServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.addCookie(new Cookie("id", UUID.randomUUID().toString()));
-        String next = req.getParameter("next");
-        System.out.println(next);
-        resp.sendRedirect(next);
+        resp.sendRedirect("/signup");
     }
+
 }
