@@ -42,7 +42,6 @@ public class ServerApp {
         handler.addServlet(new ServletHolder(new ChatServlet(collectionTinderDao, conf)), "/messages/*");
         handler.addServlet(new ServletHolder(new StaticContentServlet("static-content")), "/static/*");
 
-
         handler.addFilter(CheckCookiesServlet.class, "/users", ft);
 
         server.setHandler(handler);
