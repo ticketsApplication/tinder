@@ -6,6 +6,7 @@ import org.example.User;
 import org.example.tinderDAO.CollectionTinderDao;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +15,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+
+import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class UsersServlet extends HttpServlet {
     int calc = 0;
@@ -35,8 +40,13 @@ public class UsersServlet extends HttpServlet {
 
     private final HashMap <String,Object> data;
     private final List<User> userList;
+
+
+    private String userIdMain;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
 
         data.put("user",userList.get(0));
 
@@ -51,18 +61,31 @@ public class UsersServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
+
+        Cookie[] cs = req.getCookies();
+        String cookieName = "id";
+        Cookie cookie = null;
+        if(cs !=null) {
+            for(Cookie c: cs) {
+                if(cookieName.equals(c.getName())) {
+                    cookie = c;
+                    break;
+                }
+            }
+        }
+
         String isLikedOrNot = req.getParameter("like_status");
         String[] tokens = isLikedOrNot.split("[.]");
         int userId = Integer.parseInt(tokens[0]); // User id who should be liked
         if (tokens[1].equals("like")) {
             try {
-                collectionTinderDao.doLike(collectionTinderDao.getCurrentUserId(), userId);
+                collectionTinderDao.doLike(Integer.parseInt(cookie.getValue()), userId);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else if (tokens[1].equals("dislike")) {
             try {
-                collectionTinderDao.doDisLike(collectionTinderDao.getCurrentUserId(),userId);
+                collectionTinderDao.doDisLike(Integer.parseInt(cookie.getValue()),userId);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -76,6 +99,7 @@ public class UsersServlet extends HttpServlet {
             calc = 0;
             data.put("user",userList.get(calc));
         }
+
 
         try (PrintWriter w = resp.getWriter()) {
             conf.getTemplate("like-page-Andrii.ftl").process(data, w);
