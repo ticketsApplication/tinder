@@ -33,6 +33,7 @@ public class ServerApp {
         Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
         conf.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
         conf.setDirectoryForTemplateLoading(new File("static-content/html"));
+
         Server server = new Server(8080);
         ServletContextHandler handler = new ServletContextHandler();
 
@@ -42,6 +43,8 @@ public class ServerApp {
         handler.addServlet(new ServletHolder(new ChatServlet(collectionTinderDao, conf)), "/messages/*");
 
         handler.addServlet(new ServletHolder(new StaticContentServlet("static-content")), "/static/*");
+
+        handler.addFilter(CheckCookiesServlet.class, "/users", ft);
 
         handler.addFilter(CheckCookiesServlet.class, "/users", ft);
 
