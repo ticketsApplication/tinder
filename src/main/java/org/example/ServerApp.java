@@ -40,16 +40,18 @@ public class ServerApp {
         ServletContextHandler handler = new ServletContextHandler();
 
         SignupServlet signupServlet = new SignupServlet(collectionTinderDao, conf);   ///////////////////////////
-        SignupHistoryServlet signupHistoryServlet = new SignupHistoryServlet(collectionTinderDao, conf);   /////////////////
+//        SignupHistoryServlet signupHistoryServlet = new SignupHistoryServlet(collectionTinderDao, conf);   /////////////////
+        LoginServlet loginServlet = new LoginServlet(collectionTinderDao, conf);   /////////////////
 
         handler.addServlet(new ServletHolder(new UsersServlet(collectionTinderDao, conf)), "/users");
         handler.addServlet(new ServletHolder(new PeopleListServlet(collectionTinderDao, conf)), "/liked");
         handler.addServlet(new ServletHolder(signupServlet), "/signup");   /////////
-        handler.addServlet(new ServletHolder(signupHistoryServlet), "/signupHistory");   ////////////
-        handler.addServlet(LoginServlet.class, "/login");
-        handler.addServlet(SetCookieServlet.class, "/setcookie");   ///////
+//        handler.addServlet(new ServletHolder(signupHistoryServlet), "/signupHistory");   ////////////
+        handler.addServlet(new ServletHolder(loginServlet), "/login");
+//        handler.addServlet(SetCookieServlet.class, "/setcookie");   ///////
         handler.addServlet(RemoveCookieServlet.class, "/logout");
-        handler.addFilter(CheckCookieFilter.class, "/signup", ft);    //////
+//        handler.addFilter(CheckCookieFilter.class, "/signup", ft);    //////
+        handler.addFilter(CheckCookieFilter.class, "/login", ft);    //////
 
         handler.addServlet(ChatServlet.class, "/messages/{id}");
 

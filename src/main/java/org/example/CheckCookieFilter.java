@@ -23,7 +23,7 @@ public class CheckCookieFilter implements Filter {
             Optional<Cookie> cookieId = Optional.ofNullable(cs).flatMap(cc -> Arrays.stream(cc).filter(c -> c.getName().equals("id")).findFirst());
             if (cookieId.isPresent()) chain.doFilter(request, response);
             else
-                response.sendRedirect("/setcookie");
+                response.addCookie(new Cookie("id", UUID.randomUUID().toString()));
         } else chain.doFilter(request0, response0);
     }
 

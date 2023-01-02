@@ -12,10 +12,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.sql.SQLException;
+import java.util.*;
 
 public class SignupServlet extends HttpServlet {
 
@@ -27,16 +25,12 @@ public class SignupServlet extends HttpServlet {
         this.conf = conf;
     }
 
-    private Optional<String> safeGet(HttpServletRequest req, String paramName) {
-        return Optional.ofNullable(req.getParameter(paramName));
-    }
+//    private Optional<String> safeGet(HttpServletRequest req, String paramName) {
+//        return Optional.ofNullable(req.getParameter(paramName));
+//    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie c = Optional.ofNullable(req.getCookies())
-                .flatMap(cc -> Arrays.stream(cc)
-                        .filter(c1 -> c1.getName().equals("id")).findFirst()).get();
-        String userId = c.getValue();
 
         List<String> fileGet = null;
         try {
@@ -50,11 +44,13 @@ public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final long serialVersionUID = 1L;
+
+        resp.addCookie(new Cookie("id", UUID.randomUUID().toString()));
         Cookie c = Optional.ofNullable(req.getCookies())
                 .flatMap(cc -> Arrays.stream(cc)
                         .filter(c1 -> c1.getName().equals("id")).findFirst()).get();
         String userId = c.getValue();
+        System.out.println(userId);
 
         String name = req.getParameter("name");
         String username = req.getParameter("username");
@@ -66,11 +62,13 @@ public class SignupServlet extends HttpServlet {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         try {
-            collectionTinderDao.signUpUser(name, username, password, file, userId);
+            collectionTinderDao.signUpUser(name, username, password, file);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         try {
             resp.sendRedirect("/users");
         } catch (IOException e) {

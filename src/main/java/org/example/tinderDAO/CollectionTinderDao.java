@@ -5,7 +5,6 @@ import org.example.Message;
 import org.example.User;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,17 +139,17 @@ public class CollectionTinderDao {
     }
 
     ///////////
-    public void signUpUser(String name, String login, String password, String file, String userId) throws Exception {
+    public void signUpUser(String name, String login, String password, String file) throws Exception {
         Connection connection = getConnection();
-        String sql = "insert into users (name, photo, user_login, user_password, dt, usr) values (?, ?, ?, ?, default, ?)";
+        String sql = "insert into users (name, photo, user_login, user_password, dt) values (?, ?, ?, ?, default)";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setString(1, name);
         stmt.setString(2, file);
         stmt.setString(3, login);
         stmt.setString(4, password);
-        stmt.setString(5, userId);
 
         stmt.execute();
+        connection.close();
     }
 
     public ArrayList<String> getAll() throws Exception {
@@ -168,6 +167,21 @@ public class CollectionTinderDao {
             outcome.add(String.format("name: %s, photo: s, username: %s, password: %s", name, file, login, password));
         }
         return outcome;
+    }
+    public ArrayList<Integer> checkUser(String username, String password) throws SQLException {
+        Connection connection = getConnection();
+        String sql = "select id from users where user_login = ? and user_password = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, username);
+        stmt.setString(2, password);
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<Integer> outcomeId = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            outcomeId.add(id);
+        }
+        connection.close();
+        return outcomeId;
     }
     ///////////
 
