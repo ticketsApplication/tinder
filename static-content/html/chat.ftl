@@ -31,7 +31,11 @@
 
                     <#list messageList as line>
                         <table>
+
+                        <tr>
+
                         <tr class="line-chat">
+
                             <td class="line-chat" height="10" width="50">
                                 <h4>${line.name}</i></h4>
                             </td>
