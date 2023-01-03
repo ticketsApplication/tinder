@@ -14,7 +14,6 @@ public class CollectionTinderDao {
     }
 
     private int currentUserId = 2;
-
     public int getCurrentUserId() {
         return currentUserId;
     }

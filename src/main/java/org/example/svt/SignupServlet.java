@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class SignupServlet extends HttpServlet {
-
     private final CollectionTinderDao collectionTinderDao;
     private final Configuration conf;
 
@@ -24,10 +23,6 @@ public class SignupServlet extends HttpServlet {
         this.collectionTinderDao = collectionTinderDao;
         this.conf = conf;
     }
-
-//    private Optional<String> safeGet(HttpServletRequest req, String paramName) {
-//        return Optional.ofNullable(req.getParameter(paramName));
-//    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,13 +39,6 @@ public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        resp.addCookie(new Cookie("id", UUID.randomUUID().toString()));
-        Cookie c = Optional.ofNullable(req.getCookies())
-                .flatMap(cc -> Arrays.stream(cc)
-                        .filter(c1 -> c1.getName().equals("id")).findFirst()).get();
-        String userId = c.getValue();
-        System.out.println(userId);
 
         String name = req.getParameter("name");
         String username = req.getParameter("username");
@@ -70,10 +58,11 @@ public class SignupServlet extends HttpServlet {
         }
 
         try {
-            resp.sendRedirect("/users");
+            resp.sendRedirect("/login");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         printWriter.close();
     }
 }

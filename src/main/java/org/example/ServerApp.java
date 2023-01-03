@@ -50,7 +50,8 @@ public class ServerApp {
         handler.addServlet(new ServletHolder(loginServlet), "/login");
 //        handler.addServlet(SetCookieServlet.class, "/setcookie");   ///////
         handler.addServlet(RemoveCookieServlet.class, "/logout");
-//        handler.addFilter(CheckCookieFilter.class, "/signup", ft);    //////
+        handler.addFilter(CheckCookieFilter.class, "/users", ft);    //////
+        handler.addFilter(CheckCookieFilter.class, "/liked", ft);    //////
         handler.addFilter(CheckCookieFilter.class, "/login", ft);    //////
 
         handler.addServlet(ChatServlet.class, "/messages/{id}");

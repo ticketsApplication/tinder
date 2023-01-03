@@ -10,6 +10,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class CheckCookieFilter implements Filter {
+
+    private final String cookieId;
+
+    public CheckCookieFilter(String cookieId) {
+        this.cookieId = cookieId;
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -19,11 +26,12 @@ public class CheckCookieFilter implements Filter {
         if (request0 instanceof HttpServletRequest && response0 instanceof ServletResponse) {
             HttpServletRequest request = (HttpServletRequest) request0;
             HttpServletResponse response = (HttpServletResponse) response0;
+
             Cookie[] cs = request.getCookies();
-            Optional<Cookie> cookieId = Optional.ofNullable(cs).flatMap(cc -> Arrays.stream(cc).filter(c -> c.getName().equals("id")).findFirst());
-            if (cookieId.isPresent()) chain.doFilter(request, response);
+            Optional<Cookie> c = Optional.ofNullable(cs).flatMap(cc -> Arrays.stream(cc).filter(c1 -> c1.getName().equals("id")).findFirst());
+            if (c.isPresent()) chain.doFilter(request, response);
             else
-                response.addCookie(new Cookie("id", UUID.randomUUID().toString()));
+                response.sendRedirect("/login");
         } else chain.doFilter(request0, response0);
     }
 

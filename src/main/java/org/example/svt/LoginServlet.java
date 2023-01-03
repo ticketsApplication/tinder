@@ -17,6 +17,8 @@ import java.util.*;
 
 public class LoginServlet extends HttpServlet {
 
+    private int currentUserId;
+    private String cookieId;
     private final CollectionTinderDao collectionTinderDao;
     private final Configuration conf;
 
@@ -52,16 +54,20 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            Optional<ArrayList<Integer>> userId = Optional.ofNullable(collectionTinderDao.checkUser(username, password));
-            if (userId.isEmpty()) {
+            ArrayList<Integer> id1 = collectionTinderDao.checkUser(username, password);
+            if (id1.isEmpty()) {
                 resp.sendRedirect("/signup");
-            }
-            else {
+            } else {
+                currentUserId = id1.get(0);
+                cookieId = String.valueOf(currentUserId);
+                System.out.println(cookieId);
+                resp.addCookie(new Cookie(cookieId, UUID.randomUUID().toString()));
                 resp.sendRedirect("/users");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         printWriter.close();
     }
 }

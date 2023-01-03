@@ -12,7 +12,7 @@ public class RemoveCookieServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie c = new Cookie("id", "");
-        c.setMaxAge(60*60*24); //60*60*24
+        c.setMaxAge(0); //60*60*24
         resp.addCookie(c);
     }
 }
