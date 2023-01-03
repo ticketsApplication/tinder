@@ -26,9 +26,11 @@ public class ServerApp {
     //  http://localhost:8080/setcookie
     //  http://localhost:8080/logout
     //  http://localhost:8080/login
+
     //  http://localhost:8080//messages/{id}
     //  http://localhost:8080/dynamicusers
     public static void main(String[] args) throws Exception {
+
 
         CollectionTinderDao collectionTinderDao = new CollectionTinderDao();
 
@@ -45,6 +47,7 @@ public class ServerApp {
 
         handler.addServlet(new ServletHolder(new UsersServlet(collectionTinderDao, conf)), "/users");
         handler.addServlet(new ServletHolder(new PeopleListServlet(collectionTinderDao, conf)), "/liked");
+
         handler.addServlet(new ServletHolder(signupServlet), "/signup");   /////////
 //        handler.addServlet(new ServletHolder(signupHistoryServlet), "/signupHistory");   ////////////
         handler.addServlet(new ServletHolder(loginServlet), "/login");
@@ -54,15 +57,16 @@ public class ServerApp {
         handler.addFilter(CheckCookieFilter.class, "/liked", ft);    //////
         handler.addFilter(CheckCookieFilter.class, "/login", ft);    //////
 
-        handler.addServlet(ChatServlet.class, "/messages/{id}");
-
 
         handler.addServlet(new ServletHolder(new StaticContentServlet("static-content")), "/static/*");
+
+        handler.addFilter(CheckCookiesServlet.class, "/users", ft);
+
+        handler.addFilter(CheckCookiesServlet.class, "/users", ft);
 
         server.setHandler(handler);
 
         server.start();
         server.join();
-
     }
 }

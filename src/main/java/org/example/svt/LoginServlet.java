@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.sql.SQLException;
 import java.util.*;
 
@@ -25,10 +26,12 @@ public class LoginServlet extends HttpServlet {
     public LoginServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
         this.collectionTinderDao = collectionTinderDao;
         this.conf = conf;
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 
         List<String> fileGet = null;
         try {
@@ -69,5 +72,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         printWriter.close();
+
     }
 }
