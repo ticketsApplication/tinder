@@ -12,30 +12,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.sql.SQLException;
 import java.util.*;
 
-public class LoginServlet extends HttpServlet {
-
-    private int currentUserId;
-    private String cookieId;
+public class SignupServlet extends HttpServlet {
     private final CollectionTinderDao collectionTinderDao;
     private final Configuration conf;
 
-    public LoginServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
+    public SignupServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
         this.collectionTinderDao = collectionTinderDao;
         this.conf = conf;
-
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         List<String> fileGet = null;
         try {
-            fileGet = Files.readAllLines(Paths.get("static-content/html/login.html"));
+            fileGet = Files.readAllLines(Paths.get("static-content/html/signup.html"));
             PrintWriter w = resp.getWriter();
             fileGet.forEach(x -> w.println(x));
         } catch (IOException e) {
@@ -46,9 +40,10 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String name = req.getParameter("name");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
+        String file = req.getParameter("file");
         PrintWriter printWriter = null;
         try {
             printWriter = resp.getWriter();
@@ -57,21 +52,17 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            ArrayList<Integer> id1 = collectionTinderDao.checkUser(username, password);
-            if (id1.isEmpty()) {
-                resp.sendRedirect("/signup");
-            } else {
-                currentUserId = id1.get(0);
-                cookieId = String.valueOf(currentUserId);
-                System.out.println(cookieId);
-                resp.addCookie(new Cookie(cookieId, UUID.randomUUID().toString()));
-                resp.sendRedirect("/users");
-            }
-        } catch (SQLException e) {
+            collectionTinderDao.signUpUser(name, username, password, file);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            resp.sendRedirect("/login");
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         printWriter.close();
-
     }
 }
