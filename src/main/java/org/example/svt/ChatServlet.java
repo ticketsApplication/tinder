@@ -36,25 +36,41 @@ public class ChatServlet extends HttpServlet {
 
     private static String message;
 
-    @Override
+    private String mainUserName;
+
+       @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        final List<ChatMessage> messageList;
 
         try {
-            final List<Message> userList = collectionTinderDao.getMessageList(userIdMain, Integer.parseInt(userId));
+            messageList = collectionTinderDao.getChatList(userIdMain, Integer.parseInt(userId));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         System.out.println(userId + "doGet");
-        String mainUserName = "Ann";
-        String mainUserPhotoLink = "https://klike.net/uploads/posts/2022-06/1655707510_2.jpg";
 
-        List <ChatMessage> messageList = new ArrayList<>();
-        messageList.add(new ChatMessage("Ann","Hi"));
-        messageList.add(new ChatMessage("","How are you?"));
-        messageList.add(new ChatMessage("Kate","Hi"));
-        messageList.add(new ChatMessage("","I am Ok!"));
-        messageList.add(new ChatMessage("","And you?"));
+           try {
+               mainUserName = collectionTinderDao.getUserById(userIdMain).getName();
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+           }
+
+
+           String mainUserPhotoLink;
+           try {
+               mainUserPhotoLink = collectionTinderDao.getUserById(userIdMain).getPhotoLink();
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+           }
+
+
+//        List <ChatMessage> messageList = new ArrayList<>();
+//        messageList.add(new ChatMessage("Ann","Hi"));
+//        messageList.add(new ChatMessage("","How are you?"));
+//        messageList.add(new ChatMessage("Kate","Hi"));
+//        messageList.add(new ChatMessage("","I am Ok!"));
+//        messageList.add(new ChatMessage("","And you?"));
 
 
         data.put("mainUserName", mainUserName);
@@ -68,23 +84,29 @@ public class ChatServlet extends HttpServlet {
         } catch (TemplateException x) {
             throw new RuntimeException(x);
         }
-
-
     }
+
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         userId = req.getParameter("id");
         System.out.println(userId + "doPost");
         message = req.getParameter("message");
-        if (message != null) {
 
-//            collectionTinderDao.setMessage ()
-              System.out.println(message);
-              resp.sendRedirect(req.getContextPath() + "/messages/" + userId);
+        if (message != null) {
+            try {
+                collectionTinderDao.setMessage (userIdMain, Integer.parseInt(userId), message);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(message);
+//            resp.sendRedirect(req.getContextPath() + "/messages/" + userId);
 
         } else{
             System.out.println(message);
-            resp.sendRedirect(req.getContextPath() + "/messages/" + userId);
+//            resp.sendRedirect(req.getContextPath() + "/messages/" + userId);
         }
+
+        resp.sendRedirect(req.getContextPath() + "/messages/" + userId);
+
 
     }
 }

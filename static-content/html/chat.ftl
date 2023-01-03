@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
-    <link href="./static-content/css/style1.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
     <!-- Custom styles for this template -->
 
 </head>
@@ -31,12 +31,16 @@
 
                     <#list messageList as line>
                         <table>
+
+                        <tr>
+
                         <tr class="line-chat">
-                            <td class="line-chat" width="50">
+
+                            <td class="line-chat" height="10" width="50">
                                 <h4>${line.name}</i></h4>
                             </td>
-                            <td class="line-chat" width="100">
-                                <h6>${line.text}</h6>
+                            <td class="line-chat" height="10" width="100">
+                                <h6>${line.message}</h6>
                             </td>
                         </tr>
                             </table>
@@ -49,7 +53,7 @@
                             <form action="" method="POST">
                             <input  name="message" type="text" class="border-0" placeholder=" Send message"/>
                                 <input  name="id" type="hidden" value="${userId}"/>
-                            <button type="submit" formmethod="post" formaction="/message">Submit</button>
+                            <button type="submit" formmethod="post" formaction="/messages/${userId}">Submit</button>
                             </form>
                         </div>
                     </div>
