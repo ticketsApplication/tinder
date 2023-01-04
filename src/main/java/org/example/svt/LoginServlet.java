@@ -56,8 +56,8 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            ArrayList<Integer> id1 = collectionTinderDao.checkUser(username, password);
-            if (id1.isEmpty()) {
+            cookieId = collectionTinderDao.checkUser(username, password);
+            if (cookieId == null) {
 
                 data.put("name", "Username or password is incorrect, please try again");
                 try (PrintWriter w = resp.getWriter()) {
@@ -67,10 +67,8 @@ public class LoginServlet extends HttpServlet {
                 }
 
             } else {
-                currentUserId = id1.get(0);
-                cookieId = String.valueOf(currentUserId);
                 System.out.println(cookieId);
-                resp.addCookie(new Cookie("id", UUID.randomUUID().toString()));
+                resp.addCookie(new Cookie("id", cookieId));
                 resp.sendRedirect("/users");
             }
         } catch (SQLException e) {

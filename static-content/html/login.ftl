@@ -21,21 +21,6 @@
 <body>
 <form action="/login" method="POST">
     <div class="container">
-        <h1> Registration Page</h1>
-        <p>Please fill in this form to create an account.</p>
-        <hr>
-        <label for="file-input">Select a file</label>
-        <span>or drag it here</span>
-            <div>
-                <input id="file-input" type="file" name="file" accept=" .png, .jpeg, .jpg" required>
-            </div>
-        <br> <br>
-        Name: <input type="text" id="inputName" name="name" required>
-
-
-<body>
-<form action="/login" method="POST">
-    <div class="container">
         <h1> Log in</h1>
         <p>Please fill out this form to enter your account.</p>
         <div class="implementation-label">
