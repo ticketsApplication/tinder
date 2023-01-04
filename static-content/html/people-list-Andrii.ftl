@@ -29,7 +29,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
         <div class="col-8 offset-2">
             <div class="panel panel-default user_panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Liked list</h3>
+                    <table>
+                        <tr>
+                            <td>
+                                <h3 class="panel-title">Liked list</h3>
+                            </td>
+                            <td>
+                                <button formaction="/logout" formmethod="get">Logout</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="panel-body">
                     <div class="table-container">

@@ -14,7 +14,9 @@ public class RemoveCookieServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie c = new Cookie("id", "");
         c.setMaxAge(0); //60*60*24
-
         resp.addCookie(c);
+        resp.sendRedirect("/login");
     }
+
+
 }

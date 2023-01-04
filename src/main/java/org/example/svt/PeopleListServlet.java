@@ -6,6 +6,7 @@ import org.example.User;
 import org.example.tinderDAO.CollectionTinderDao;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,19 +27,34 @@ public class PeopleListServlet extends HttpServlet {
         this.conf = conf;
     }
 
+    private int getCurrentUserIdFromCookie (HttpServletRequest req) {
+        Cookie[] cs = req.getCookies();
+        String cookieName = "id";
+        Cookie cookie = null;
+        if(cs !=null) {
+            for(Cookie c: cs) {
+                if(cookieName.equals(c.getName())) {
+                    cookie = c;
+                    break;
+                }
+            }
+        }
+        System.out.println(cookie.getValue());
+        return Integer.parseInt(cookie.getValue());
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HashMap<String,Object> data = new HashMap<>();
-        List<User> userList = null;
+        List<User> userListLiked = null;
         try {
-            userList = collectionTinderDao.getLiked(collectionTinderDao.getCurrentUserId());
+            userListLiked = collectionTinderDao.getLiked(getCurrentUserIdFromCookie(req));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        data.put("user",userList);
+        data.put("user",userListLiked);
 
         try (PrintWriter w = resp.getWriter()) {
             conf.getTemplate("people-list-Andrii.ftl").process(data, w);
@@ -51,14 +67,14 @@ public class PeopleListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HashMap<String, Object> data = new HashMap<>();
-        List<User> userList = null;
+        List<User> userListLiked = null;
         try {
-            userList = collectionTinderDao.getLiked(collectionTinderDao.getCurrentUserId());
+            userListLiked = collectionTinderDao.getLiked(getCurrentUserIdFromCookie(req));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        data.put("user",userList);
+        data.put("user",userListLiked);
 
         try (PrintWriter w = resp.getWriter()) {
             conf.getTemplate("people-list-Andrii.ftl").process(data, w);

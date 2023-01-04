@@ -76,6 +76,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
                             <button type="submit" name="like_status" value="${user.id}.dislike"  formmethod="post" formaction="/users">
                                 <span class="fa fa-times"></span></button>
                             <button formaction="/liked" formmethod="post">Liked</button>
+                            <button formaction="/logout" formmethod="get">Logout</button>
                             </form>
                         </div>
 
