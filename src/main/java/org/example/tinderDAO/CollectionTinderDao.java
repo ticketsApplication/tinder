@@ -13,7 +13,7 @@ public class CollectionTinderDao {
     public CollectionTinderDao() {
     }
 
-    private int currentUserId = 2;
+    private int currentUserId;
     public int getCurrentUserId() {
         return currentUserId;
     }
@@ -151,22 +151,22 @@ public class CollectionTinderDao {
         connection.close();
     }
 
-    public ArrayList<String> getAll() throws Exception {
-        Connection connection = getConnection();
-        String sql = "select name, photo, user_login, user_password, dt, usr from users";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-        ArrayList<String> outcome = new ArrayList<>();
-        while (rs.next()) {
-            String name = rs.getString("name");
-            String login = rs.getString("login");
-            String password = rs.getString("password");
-            String file = rs.getString("file");
-            String userId = rs.getString("id");
-            outcome.add(String.format("name: %s, photo: s, username: %s, password: %s", name, file, login, password));
-        }
-        return outcome;
-    }
+//    public ArrayList<String> getAll() throws Exception {
+//        Connection connection = getConnection();
+//        String sql = "select name, photo, user_login, user_password, dt, usr from users";
+//        PreparedStatement stmt = connection.prepareStatement(sql);
+//        ResultSet rs = stmt.executeQuery();
+//        ArrayList<String> outcome = new ArrayList<>();
+//        while (rs.next()) {
+//            String name = rs.getString("name");
+//            String login = rs.getString("login");
+//            String password = rs.getString("password");
+//            String file = rs.getString("file");
+//            String userId = rs.getString("id");
+//            outcome.add(String.format("name: %s, photo: s, username: %s, password: %s", name, file, login, password));
+//        }
+//        return outcome;
+//    }
     public ArrayList<Integer> checkUser(String username, String password) throws SQLException {
         Connection connection = getConnection();
         String sql = "select id from users where user_login = ? and user_password = ?";

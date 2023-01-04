@@ -11,12 +11,6 @@ import java.util.UUID;
 
 public class CheckCookieFilter implements Filter {
 
-    private final String cookieId;
-
-    public CheckCookieFilter(String cookieId) {
-        this.cookieId = cookieId;
-    }
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
