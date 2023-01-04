@@ -167,17 +167,16 @@ public class CollectionTinderDao {
         }
         return outcome;
     }
-    public ArrayList<Integer> checkUser(String username, String password) throws SQLException {
+    public String checkUser(String username, String password) throws SQLException {
         Connection connection = getConnection();
         String sql = "select id from users where user_login = ? and user_password = ?";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setString(1, username);
         stmt.setString(2, password);
         ResultSet rs = stmt.executeQuery();
-        ArrayList<Integer> outcomeId = new ArrayList<>();
+        String outcomeId = null;
         while (rs.next()) {
-            Integer id = rs.getInt("id");
-            outcomeId.add(id);
+            outcomeId = String.valueOf(rs.getInt("id"));
         }
         connection.close();
         return outcomeId;

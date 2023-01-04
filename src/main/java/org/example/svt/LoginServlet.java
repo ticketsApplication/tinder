@@ -47,31 +47,31 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String username = req.getParameter("username");
+        System.out.println(username);
         String password = req.getParameter("password");
-
-        PrintWriter printWriter = null;
-        try {
-            printWriter = resp.getWriter();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println(password);
 
         try {
-            ArrayList<Integer> id1 = collectionTinderDao.checkUser(username, password);
-            if (id1.isEmpty()) {
+            cookieId = collectionTinderDao.checkUser(username, password);
+            if (cookieId == null) {
                 resp.sendRedirect("/signup");
             } else {
-                currentUserId = id1.get(0);
-                cookieId = String.valueOf(currentUserId);
                 System.out.println(cookieId);
-                resp.addCookie(new Cookie(cookieId, UUID.randomUUID().toString()));
+                resp.addCookie(new Cookie("id", cookieId));
                 resp.sendRedirect("/users");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        printWriter.close();
+        // PrintWriter printWriter = null;
+//        try {
+//            printWriter = resp.getWriter();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
+//        printWriter.close();
 
     }
 }

@@ -1,4 +1,4 @@
-package org.example.svt;
+package org.example.flt;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,13 +9,18 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class CheckCookiesServlet implements HttpFilter{
+public class CheckCookiesFilter implements HttpFilter {
     @Override
     public void doHttpFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
         Cookie[] cs = req.getCookies();
         Optional<Cookie> cookieId = Optional.ofNullable(cs)
                 .flatMap(cc -> Arrays.stream(cc).filter(c -> c.getName().equals("id")).findFirst());
-        if (cookieId.isPresent()) chain.doFilter(req, resp);
-        else resp.sendRedirect("/login");
+        System.out.println("in filter");
+        if (cookieId.isPresent()) {
+            System.out.println("continue");
+            chain.doFilter(req, resp);
+        }
+        else  {System.out.println("in filter redirect");
+            resp.sendRedirect("/login");}
     }
 }

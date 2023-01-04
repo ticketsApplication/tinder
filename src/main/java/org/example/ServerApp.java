@@ -5,6 +5,7 @@ import freemarker.template.Configuration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.example.flt.CheckCookiesFilter;
 import org.example.svt.*;
 
 import org.example.tinderDAO.CollectionTinderDao;
@@ -41,28 +42,15 @@ public class ServerApp {
         Server server = new Server(8080);
         ServletContextHandler handler = new ServletContextHandler();
 
-        SignupServlet signupServlet = new SignupServlet(collectionTinderDao, conf);   ///////////////////////////
-//        SignupHistoryServlet signupHistoryServlet = new SignupHistoryServlet(collectionTinderDao, conf);   /////////////////
-        LoginServlet loginServlet = new LoginServlet(collectionTinderDao, conf);   /////////////////
-
         handler.addServlet(new ServletHolder(new UsersServlet(collectionTinderDao, conf)), "/users");
         handler.addServlet(new ServletHolder(new PeopleListServlet(collectionTinderDao, conf)), "/liked");
-
-        handler.addServlet(new ServletHolder(signupServlet), "/signup");   /////////
-//        handler.addServlet(new ServletHolder(signupHistoryServlet), "/signupHistory");   ////////////
-        handler.addServlet(new ServletHolder(loginServlet), "/login");
-//        handler.addServlet(SetCookieServlet.class, "/setcookie");   ///////
+        handler.addServlet(new ServletHolder(new ChatServlet(collectionTinderDao, conf)), "/messages/*");
+        handler.addServlet(new ServletHolder(new SignupServlet(collectionTinderDao, conf)), "/signup");   /////////
+        handler.addServlet(new ServletHolder(new LoginServlet(collectionTinderDao, conf)), "/login");
         handler.addServlet(RemoveCookieServlet.class, "/logout");
-        handler.addFilter(CheckCookieFilter.class, "/users", ft);    //////
-        handler.addFilter(CheckCookieFilter.class, "/liked", ft);    //////
-        handler.addFilter(CheckCookieFilter.class, "/login", ft);    //////
-
-
+        handler.addFilter(CheckCookiesFilter.class, "/users", ft);
+        handler.addFilter(CheckCookiesFilter.class, "/liked", ft);
         handler.addServlet(new ServletHolder(new StaticContentServlet("static-content")), "/static/*");
-
-        handler.addFilter(CheckCookiesServlet.class, "/users", ft);
-
-        handler.addFilter(CheckCookiesServlet.class, "/users", ft);
 
         server.setHandler(handler);
 

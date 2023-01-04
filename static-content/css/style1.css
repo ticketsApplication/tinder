@@ -164,6 +164,13 @@ a {
     text-align: center;
 }
 
+.line-chat{
+    line-height: 20px;
+}
+.line-message {
+    font-size: 10px;
+}
+
 
 
 
