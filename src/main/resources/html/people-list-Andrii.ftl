@@ -1,20 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru-ua">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="img/favicon.ico">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="img/favicon.ico"/>
 
     <title>People list</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-    <!-- Custom styles for this template -->
-
-    <link rel="stylesheet" href="static/css/style1.css">
 
 </head>
 <body style="/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e8d7d3+2,c9e0d3+10,e8deda+72,e8d7d3+100 */
@@ -38,7 +36,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
 
                                 <div>
                                     <form>
-                                        <button class="btn btn-light" formaction="/logout" formmethod="get">Logout</button>
+                                        <button class="btn btn-light" formaction="/logout" formmethod="get">Logout
+                                        </button>
                                     </form>
                                 </div>
 
@@ -57,15 +56,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
                                     <tr>
                                         <td width="0">
                                             <div class="avatar-img">
-                                                <button name="id" value="${line.id}" formmethod="post" formaction="/messages/${line.id}">
-                                                    <img class="img-circle" width="200px" height="200px"  alt="Button ${line.name}" src="${line.photoLink}"/>
+                                                <button name="id" value="${line.id}" formmethod="post"
+                                                        formaction="/messages/${line.id}">
+                                                    <img class="img-circle" width="200px" height="200px"
+                                                         alt="Button ${line.name}" src="${line.photoLink}"/>
                                                 </button>
                                             </div>
                                         </td>
                                         <td class="align-middle">
-                                         <div class="liked-name">
-                                             ${line.name}
-                                         </div>
+                                            <div class="liked-name">
+                                                ${line.name}
+                                            </div>
                                         </td>
                                     </tr>
                                 </#list>

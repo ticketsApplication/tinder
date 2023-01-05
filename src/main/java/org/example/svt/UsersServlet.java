@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class UsersServlet extends HttpServlet {
    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         userListWithoutCurrentUser = getUserListWithoutCurrentUser(getCurrentUserIdFromCookie(req), req);
         data.put("user", userListWithoutCurrentUser.get(0));
 
@@ -79,7 +80,7 @@ public class UsersServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         userListWithoutCurrentUser = getUserListWithoutCurrentUser(getCurrentUserIdFromCookie(req), req);
         String isLikedOrNot = req.getParameter("like_status");
         String[] tokens = isLikedOrNot.split("[.]");

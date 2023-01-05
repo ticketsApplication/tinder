@@ -1,6 +1,8 @@
 package org.example;
 
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -34,7 +36,8 @@ public class ServerApp {
 
         Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
         conf.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
-        conf.setDirectoryForTemplateLoading(new File("static-content/html"));
+        TemplateLoader ldr = new ClassTemplateLoader(ServerApp.class, "/html");
+        conf.setTemplateLoader(ldr);
 
         Server server = new Server(8080);
         ServletContextHandler handler = new ServletContextHandler();

@@ -45,7 +45,7 @@ public class PeopleListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         HashMap<String,Object> data = new HashMap<>();
         List<User> userListLiked = null;
         try {
@@ -65,7 +65,7 @@ public class PeopleListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         HashMap<String, Object> data = new HashMap<>();
         List<User> userListLiked = null;
         try {

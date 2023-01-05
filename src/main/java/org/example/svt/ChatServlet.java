@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +56,7 @@ public class ChatServlet extends HttpServlet {
 
        @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
 
     }
 
@@ -63,6 +64,8 @@ public class ChatServlet extends HttpServlet {
         userId = req.getParameter("id");
 
         message = req.getParameter("message");
+
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
 
         if (message != null) {
             try {
