@@ -39,6 +39,7 @@ public class PeopleListServlet extends HttpServlet {
                 }
             }
         }
+
         return Integer.parseInt(cookie.getValue());
     }
 

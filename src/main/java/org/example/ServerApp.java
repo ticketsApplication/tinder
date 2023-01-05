@@ -49,7 +49,6 @@ public class ServerApp {
         handler.addFilter(CheckCookiesFilter.class, "/liked", ft);
         handler.addServlet(new ServletHolder(new StaticContentServlet("static-content")), "/static/*");
 
-
         server.setHandler(handler);
 
         server.start();

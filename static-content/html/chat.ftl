@@ -32,7 +32,6 @@
                     <#list messageList as line>
                         <table>
                         <tr>
-                        <tr>
                             <td class="line-chat"  width="50">
                                 <p class="line-message">${line.name}</p>
                             </td>

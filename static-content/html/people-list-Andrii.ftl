@@ -35,11 +35,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
                                 <h3 class="panel-title">Liked list</h3>
                             </td>
                             <td>
+
                                 <div>
                                     <form>
                                         <button class="btn btn-light" formaction="/logout" formmethod="get">Logout</button>
                                     </form>
                                 </div>
+
+
                             </td>
                         </tr>
                     </table>

@@ -165,7 +165,9 @@ a {
 }
 
 .line-chat{
+
     line-height: 15px;
+
 }
 .line-message {
     font-size: 10px;
@@ -175,6 +177,12 @@ a {
     vertical-align: center;
     horiz-align: center;
   }
+
+
+.implementation-label {
+    color: red;
+}
+
 
 
 

@@ -56,11 +56,13 @@ public class UsersServlet extends HttpServlet {
 
         return Integer.parseInt(cookie.getValue());
     }
+    
     private List<User> getUserListWithoutCurrentUser (int currentUserId, HttpServletRequest req) {
         return userList.stream()
                 .filter(user -> user.getId() != getCurrentUserIdFromCookie(req))
                 .collect(Collectors.toList());
     }
+   
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -95,7 +97,6 @@ public class UsersServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
-
 
 
         if (calc < userListWithoutCurrentUser.size() - 1) {

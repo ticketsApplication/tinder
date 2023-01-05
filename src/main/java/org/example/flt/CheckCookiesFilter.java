@@ -20,5 +20,6 @@ public class CheckCookiesFilter implements HttpFilter {
             chain.doFilter(req, resp);
         }
         else  resp.sendRedirect("/login");
+
     }
 }

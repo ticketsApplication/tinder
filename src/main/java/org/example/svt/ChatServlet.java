@@ -61,6 +61,7 @@ public class ChatServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         userId = req.getParameter("id");
+
         message = req.getParameter("message");
 
         if (message != null) {
@@ -79,6 +80,7 @@ public class ChatServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
 
         try {
             mainUserName = collectionTinderDao.getUserById(getCurrentUserIdFromCookie(req)).getName();
