@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.example.User;
 import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -20,10 +21,10 @@ import java.util.List;
 
 public class PeopleListServlet extends HttpServlet {
 
-    private final CollectionTinderDao collectionTinderDao;
+    private final ControllerTinderDao controllerTinderDao;
     private final Configuration conf;
-    public PeopleListServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
-        this.collectionTinderDao = collectionTinderDao;
+    public PeopleListServlet(ControllerTinderDao controllerTinderDao, Configuration conf) {
+        this.controllerTinderDao = controllerTinderDao;
         this.conf = conf;
     }
 
@@ -45,11 +46,11 @@ public class PeopleListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         HashMap<String,Object> data = new HashMap<>();
         List<User> userListLiked = null;
         try {
-            userListLiked = collectionTinderDao.getLiked(getCurrentUserIdFromCookie(req));
+            userListLiked = controllerTinderDao.getLiked(getCurrentUserIdFromCookie(req));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -65,11 +66,11 @@ public class PeopleListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         HashMap<String, Object> data = new HashMap<>();
         List<User> userListLiked = null;
         try {
-            userListLiked = collectionTinderDao.getLiked(getCurrentUserIdFromCookie(req));
+            userListLiked = controllerTinderDao.getLiked(getCurrentUserIdFromCookie(req));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

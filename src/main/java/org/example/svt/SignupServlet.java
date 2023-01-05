@@ -3,6 +3,7 @@ package org.example.svt;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -11,17 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 
 public class SignupServlet extends HttpServlet {
-    private final CollectionTinderDao collectionTinderDao;
+    private final ControllerTinderDao controllerTinderDao;
     private final Configuration conf;
 
-    public SignupServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
-        this.collectionTinderDao = collectionTinderDao;
+    public SignupServlet(ControllerTinderDao controllerTinderDao, Configuration conf) {
+        this.controllerTinderDao = controllerTinderDao;
         this.conf = conf;
     }
 
@@ -29,7 +31,7 @@ public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         data.put("name", "");
         try (PrintWriter w = resp.getWriter()) {
             conf.getTemplate("signup.ftl").process(data, w);
@@ -40,7 +42,7 @@ public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         String name = req.getParameter("name");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -53,7 +55,7 @@ public class SignupServlet extends HttpServlet {
         }
 
         try {
-            collectionTinderDao.signUpUser(name, username, password, file);
+            controllerTinderDao.signUpUser(name, username, password, file);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

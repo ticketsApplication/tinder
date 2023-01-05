@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.example.User;
 import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 import java.util.HashMap;
@@ -20,13 +22,13 @@ import java.util.stream.Collectors;
 
 public class UsersServlet extends HttpServlet {
     int calc = 0;
-    private final CollectionTinderDao collectionTinderDao;
+    private final ControllerTinderDao controllerTinderDao;
 
     private final Configuration conf;
-    public UsersServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
-        this.collectionTinderDao = collectionTinderDao;
+    public UsersServlet(ControllerTinderDao controllerTinderDao, Configuration conf) {
+        this.controllerTinderDao = controllerTinderDao;
         try {
-            userList = collectionTinderDao.getUsers();
+            userList = controllerTinderDao.getUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -65,7 +67,7 @@ public class UsersServlet extends HttpServlet {
    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         userListWithoutCurrentUser = getUserListWithoutCurrentUser(getCurrentUserIdFromCookie(req), req);
         data.put("user", userListWithoutCurrentUser.get(0));
 
@@ -79,20 +81,20 @@ public class UsersServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         userListWithoutCurrentUser = getUserListWithoutCurrentUser(getCurrentUserIdFromCookie(req), req);
         String isLikedOrNot = req.getParameter("like_status");
         String[] tokens = isLikedOrNot.split("[.]");
         int userId = Integer.parseInt(tokens[0]); // User id who should be liked
         if (tokens[1].equals("like")) {
             try {
-                collectionTinderDao.doLike(getCurrentUserIdFromCookie(req), userId);
+                controllerTinderDao.doLike(getCurrentUserIdFromCookie(req), userId);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else if (tokens[1].equals("dislike")) {
             try {
-                collectionTinderDao.doDisLike(getCurrentUserIdFromCookie(req),userId);
+                controllerTinderDao.doDisLike(getCurrentUserIdFromCookie(req),userId);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
