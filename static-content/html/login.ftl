@@ -38,7 +38,6 @@
             <p>You don't have an account? <a href="/signup">Sign up</a>.</p>
         </div>
         <p class="mt-5 mb-3 text-muted">&copy; Tinder 2018</p>
-
     </div>
 </form>
 
