@@ -101,8 +101,8 @@ public class UsersServlet extends HttpServlet {
         }
 
 
-        if (calc < userListWithoutCurrentUser.size() - 1) {
-            data.put("user", userListWithoutCurrentUser.get(++calc));
+        if (calc < userListWithoutCurrentUser.size()) {
+            data.put("user", userListWithoutCurrentUser.get(calc++));
         } else {
             calc = 0;
             data.put("user", userListWithoutCurrentUser.get(calc));
