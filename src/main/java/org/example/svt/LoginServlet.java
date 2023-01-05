@@ -3,6 +3,7 @@ package org.example.svt;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -22,11 +23,11 @@ public class LoginServlet extends HttpServlet {
 
     private int currentUserId;
     private String cookieId;
-    private final CollectionTinderDao collectionTinderDao;
+    private final ControllerTinderDao controllerTinderDao;
     private final Configuration conf;
 
-    public LoginServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
-        this.collectionTinderDao = collectionTinderDao;
+    public LoginServlet(ControllerTinderDao controllerTinderDao, Configuration conf) {
+        this.controllerTinderDao = controllerTinderDao;
         this.conf = conf;
     }
 
@@ -50,7 +51,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
        try {
-            cookieId = collectionTinderDao.checkUser(username, password);
+            cookieId = controllerTinderDao.checkUser(username, password);
             if (cookieId == null) {
 
                 data.put("name", "Username or password is incorrect, please try again");
@@ -68,10 +69,6 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-
-        //printWriter.close();
 
     }
 

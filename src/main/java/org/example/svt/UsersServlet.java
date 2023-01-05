@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.example.User;
 import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -21,13 +22,13 @@ import java.util.stream.Collectors;
 
 public class UsersServlet extends HttpServlet {
     int calc = 0;
-    private final CollectionTinderDao collectionTinderDao;
+    private final ControllerTinderDao controllerTinderDao;
 
     private final Configuration conf;
-    public UsersServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
-        this.collectionTinderDao = collectionTinderDao;
+    public UsersServlet(ControllerTinderDao controllerTinderDao, Configuration conf) {
+        this.controllerTinderDao = controllerTinderDao;
         try {
-            userList = collectionTinderDao.getUsers();
+            userList = controllerTinderDao.getUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -87,13 +88,13 @@ public class UsersServlet extends HttpServlet {
         int userId = Integer.parseInt(tokens[0]); // User id who should be liked
         if (tokens[1].equals("like")) {
             try {
-                collectionTinderDao.doLike(getCurrentUserIdFromCookie(req), userId);
+                controllerTinderDao.doLike(getCurrentUserIdFromCookie(req), userId);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else if (tokens[1].equals("dislike")) {
             try {
-                collectionTinderDao.doDisLike(getCurrentUserIdFromCookie(req),userId);
+                controllerTinderDao.doDisLike(getCurrentUserIdFromCookie(req),userId);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

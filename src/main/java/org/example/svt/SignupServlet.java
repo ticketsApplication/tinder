@@ -3,6 +3,7 @@ package org.example.svt;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -18,11 +19,11 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class SignupServlet extends HttpServlet {
-    private final CollectionTinderDao collectionTinderDao;
+    private final ControllerTinderDao controllerTinderDao;
     private final Configuration conf;
 
-    public SignupServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
-        this.collectionTinderDao = collectionTinderDao;
+    public SignupServlet(ControllerTinderDao controllerTinderDao, Configuration conf) {
+        this.controllerTinderDao = controllerTinderDao;
         this.conf = conf;
     }
 
@@ -54,7 +55,7 @@ public class SignupServlet extends HttpServlet {
         }
 
         try {
-            collectionTinderDao.signUpUser(name, username, password, file);
+            controllerTinderDao.signUpUser(name, username, password, file);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.example.ChatMessage;
 import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 import javax.servlet.ServletException;
 
@@ -21,10 +22,10 @@ import java.util.List;
 
 public class ChatServlet extends HttpServlet {
 
-    private final CollectionTinderDao collectionTinderDao;
+    private final ControllerTinderDao controllerTinderDao;
     private final Configuration conf;
-    public ChatServlet(CollectionTinderDao collectionTinderDao, Configuration conf) {
-        this.collectionTinderDao = collectionTinderDao;
+    public ChatServlet(ControllerTinderDao controllerTinderDao, Configuration conf) {
+        this.controllerTinderDao = controllerTinderDao;
         this.conf = conf;
         data = new HashMap<>();
     }
@@ -69,7 +70,7 @@ public class ChatServlet extends HttpServlet {
 
         if (message != null) {
             try {
-                collectionTinderDao.setMessage (getCurrentUserIdFromCookie(req), Integer.parseInt(userId), message);
+                controllerTinderDao.setMessage (getCurrentUserIdFromCookie(req), Integer.parseInt(userId), message);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -79,14 +80,14 @@ public class ChatServlet extends HttpServlet {
         final List<ChatMessage> messageList;
 
         try {
-            messageList = collectionTinderDao.getChatList(getCurrentUserIdFromCookie(req), Integer.parseInt(userId));
+            messageList = controllerTinderDao.getChatList(getCurrentUserIdFromCookie(req), Integer.parseInt(userId));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
 
         try {
-            mainUserName = collectionTinderDao.getUserById(getCurrentUserIdFromCookie(req)).getName();
+            mainUserName = controllerTinderDao.getUserById(getCurrentUserIdFromCookie(req)).getName();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +95,7 @@ public class ChatServlet extends HttpServlet {
         String currentUserPhotoLink;
 
         try {
-            currentUserPhotoLink = collectionTinderDao.getUserById(getCurrentUserIdFromCookie(req)).getPhotoLink();
+            currentUserPhotoLink = controllerTinderDao.getUserById(getCurrentUserIdFromCookie(req)).getPhotoLink();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -110,6 +111,5 @@ public class ChatServlet extends HttpServlet {
         } catch (TemplateException x) {
             throw new RuntimeException(x);
         }
-
     }
 }

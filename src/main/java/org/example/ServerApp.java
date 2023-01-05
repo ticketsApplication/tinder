@@ -10,11 +10,10 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.example.flt.CheckCookiesFilter;
 import org.example.svt.*;
 
-import org.example.tinderDAO.CollectionTinderDao;
+import org.example.tinderDAO.ControllerTinderDao;
 
 
 import javax.servlet.DispatcherType;
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 
@@ -31,8 +30,7 @@ public class ServerApp {
 
     public static void main(String[] args) throws Exception {
 
-
-        CollectionTinderDao collectionTinderDao = new CollectionTinderDao();
+        ControllerTinderDao controllerTinderDao = new ControllerTinderDao();
 
         Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
         conf.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
@@ -42,11 +40,11 @@ public class ServerApp {
         Server server = new Server(8080);
         ServletContextHandler handler = new ServletContextHandler();
 
-        handler.addServlet(new ServletHolder(new UsersServlet(collectionTinderDao, conf)), "/users");
-        handler.addServlet(new ServletHolder(new PeopleListServlet(collectionTinderDao, conf)), "/liked");
-        handler.addServlet(new ServletHolder(new ChatServlet(collectionTinderDao, conf)), "/messages/*");
-        handler.addServlet(new ServletHolder(new SignupServlet(collectionTinderDao, conf)), "/signup");   /////////
-        handler.addServlet(new ServletHolder(new LoginServlet(collectionTinderDao, conf)), "/login");
+        handler.addServlet(new ServletHolder(new UsersServlet(controllerTinderDao, conf)), "/users");
+        handler.addServlet(new ServletHolder(new PeopleListServlet(controllerTinderDao, conf)), "/liked");
+        handler.addServlet(new ServletHolder(new ChatServlet(controllerTinderDao, conf)), "/messages/*");
+        handler.addServlet(new ServletHolder(new SignupServlet(controllerTinderDao, conf)), "/signup");   /////////
+        handler.addServlet(new ServletHolder(new LoginServlet(controllerTinderDao, conf)), "/login");
         handler.addServlet(RemoveCookieServlet.class, "/logout");
         handler.addFilter(CheckCookiesFilter.class, "/users", ft);
         handler.addFilter(CheckCookiesFilter.class, "/liked", ft);
