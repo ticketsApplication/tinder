@@ -48,14 +48,7 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        PrintWriter printWriter = null;
-        try {
-            printWriter = resp.getWriter();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
+       try {
             cookieId = collectionTinderDao.checkUser(username, password);
             if (cookieId == null) {
 
@@ -67,7 +60,7 @@ public class LoginServlet extends HttpServlet {
                 }
 
             } else {
-                System.out.println(cookieId);
+               
                 resp.addCookie(new Cookie("id", cookieId));
                 resp.sendRedirect("/users");
             }
@@ -75,7 +68,10 @@ public class LoginServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
+
+
         printWriter.close();
+
     }
 
 }

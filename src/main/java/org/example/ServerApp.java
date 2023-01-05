@@ -24,12 +24,9 @@ public class ServerApp {
     //  http://localhost:8080/users
     //  http://localhost:8080/liked
     //  http://localhost:8080/signup
-    //  http://localhost:8080/setcookie
     //  http://localhost:8080/logout
     //  http://localhost:8080/login
 
-    //  http://localhost:8080//messages/{id}
-    //  http://localhost:8080/dynamicusers
     public static void main(String[] args) throws Exception {
 
 

@@ -21,6 +21,7 @@ public class StaticContentServlet extends HttpServlet {
 
         if (pathInfo.startsWith("/")) pathInfo = pathInfo.substring(1);
 
+
         Path file = Path.of(osPrefix, pathInfo);
 
         try (ServletOutputStream os = resp.getOutputStream()) {

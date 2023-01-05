@@ -10,7 +10,7 @@
     <title>People list</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
 
@@ -35,14 +35,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
                                 <h3 class="panel-title">Liked list</h3>
                             </td>
                             <td>
-                                <button formaction="/logout" formmethod="get">Logout</button>
+
+                                <div>
+                                    <form>
+                                        <button class="btn btn-light" formaction="/logout" formmethod="get">Logout</button>
+                                    </form>
+                                </div>
+
+
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div class="panel-body">
                     <div class="table-container">
-                        <table class="table-users table" border="0">
+                        <table border="0">
                             <tbody>
 
                             <form action="" method="POST">
@@ -50,13 +57,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
                                     <tr>
                                         <td width="0">
                                             <div class="avatar-img">
-                                                <button name="id" value="${line.id}" formmethod="post" formaction="/messages/1">
+                                                <button name="id" value="${line.id}" formmethod="post" formaction="/messages/${line.id}">
                                                     <img class="img-circle" width="200px" height="200px"  alt="Button ${line.name}" src="${line.photoLink}"/>
                                                 </button>
                                             </div>
                                         </td>
                                         <td class="align-middle">
-                                            ${line.name}
+                                         <div class="liked-name">
+                                             ${line.name}
+                                         </div>
                                         </td>
                                     </tr>
                                 </#list>
