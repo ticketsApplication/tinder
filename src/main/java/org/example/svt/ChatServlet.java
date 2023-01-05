@@ -49,7 +49,7 @@ public class ChatServlet extends HttpServlet {
                 }
             }
         }
-        System.out.println(cookie.getValue());
+
         return Integer.parseInt(cookie.getValue());
     }
 
@@ -61,7 +61,6 @@ public class ChatServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         userId = req.getParameter("id");
-        System.out.println(userId + "doPost");
         message = req.getParameter("message");
 
         if (message != null) {
@@ -70,9 +69,7 @@ public class ChatServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(message);
-        } else{
-            System.out.println(message);
+
         }
 
         final List<ChatMessage> messageList;
@@ -82,7 +79,6 @@ public class ChatServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(userId + "doGet");
 
         try {
             mainUserName = collectionTinderDao.getUserById(getCurrentUserIdFromCookie(req)).getName();

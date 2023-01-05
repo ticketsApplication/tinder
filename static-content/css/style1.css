@@ -165,11 +165,16 @@ a {
 }
 
 .line-chat{
-    line-height: 20px;
+    line-height: 15px;
 }
 .line-message {
     font-size: 10px;
 }
+
+.liked-name {
+    vertical-align: center;
+    horiz-align: center;
+  }
 
 
 

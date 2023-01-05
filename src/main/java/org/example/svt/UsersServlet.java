@@ -53,7 +53,7 @@ public class UsersServlet extends HttpServlet {
                 }
             }
         }
-        System.out.println(cookie.getValue());
+
         return Integer.parseInt(cookie.getValue());
     }
     private List<User> getUserListWithoutCurrentUser (int currentUserId, HttpServletRequest req) {
@@ -96,7 +96,7 @@ public class UsersServlet extends HttpServlet {
             }
         }
 
-        System.out.printf("id: %s status: %s", tokens[0], tokens [1]);
+
 
         if (calc < userListWithoutCurrentUser.size() - 1) {
             data.put("user", userListWithoutCurrentUser.get(++calc));
