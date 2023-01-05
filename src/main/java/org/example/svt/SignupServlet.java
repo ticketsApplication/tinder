@@ -1,6 +1,7 @@
 package org.example.svt;
 
 import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 import org.example.tinderDAO.CollectionTinderDao;
 
 import javax.servlet.ServletException;
@@ -24,15 +25,15 @@ public class SignupServlet extends HttpServlet {
         this.conf = conf;
     }
 
+    HashMap<String, Object> data = new HashMap<>();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<String> fileGet = null;
-        try {
-            fileGet = Files.readAllLines(Paths.get("static-content/html/signup.html"));
-            PrintWriter w = resp.getWriter();
-            fileGet.forEach(x -> w.println(x));
-        } catch (IOException e) {
+        data.put("name", "");
+        try (PrintWriter w = resp.getWriter()) {
+            conf.getTemplate("signup.ftl").process(data, w);
+        } catch (TemplateException e) {
             throw new RuntimeException(e);
         }
     }
