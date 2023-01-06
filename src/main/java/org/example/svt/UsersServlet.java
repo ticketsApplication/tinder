@@ -58,13 +58,13 @@ public class UsersServlet extends HttpServlet {
 
         return Integer.parseInt(cookie.getValue());
     }
-    
+
     private List<User> getUserListWithoutCurrentUser (int currentUserId, HttpServletRequest req) {
         return userList.stream()
                 .filter(user -> user.getId() != getCurrentUserIdFromCookie(req))
                 .collect(Collectors.toList());
     }
-   
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
@@ -105,7 +105,7 @@ public class UsersServlet extends HttpServlet {
             data.put("user", userListWithoutCurrentUser.get(calc++));
         } else {
             calc = 0;
-            data.put("user", userListWithoutCurrentUser.get(calc));
+            resp.sendRedirect("/liked");
         }
 
         try (PrintWriter w = resp.getWriter()) {

@@ -36,6 +36,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
 
                                 <div>
                                     <form>
+                                        <button class="btn btn-light" formaction="/users" formmethod="get">Users
+                                        </button>
                                         <button class="btn btn-light" formaction="/logout" formmethod="get">Logout
                                         </button>
                                     </form>
@@ -80,6 +82,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d7d3', end
         </div>
     </div>
 </div>
-
 </body>
 </html>
