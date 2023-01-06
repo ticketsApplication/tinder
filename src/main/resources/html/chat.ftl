@@ -108,7 +108,7 @@
     }
 
     .line-chat{
-        line-height: 10px;
+        line-height: 20px;
     }
     .line-message {
         font-size: 20px;

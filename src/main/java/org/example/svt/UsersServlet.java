@@ -105,7 +105,7 @@ public class UsersServlet extends HttpServlet {
             data.put("user", userListWithoutCurrentUser.get(calc++));
         } else {
             calc = 0;
-            data.put("user", userListWithoutCurrentUser.get(calc));
+            resp.sendRedirect("/liked");
         }
 
         try (PrintWriter w = resp.getWriter()) {
